@@ -1,6 +1,5 @@
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import { Logger } from 'nestjs-pino';
 import { ValidationPipe } from '@nestjs/common';
 
 declare const module: {
@@ -10,7 +9,11 @@ declare const module: {
   };
 };
 
-export async function bootstrap(AppModule: any, serviceName: string) {
+export async function bootstrap(
+  AppModule: any,
+  serviceName: string,
+  port: number,
+) {
   const app = await NestFactory.create(AppModule, { bufferLogs: true });
 
   const config = new DocumentBuilder()
@@ -23,12 +26,13 @@ export async function bootstrap(AppModule: any, serviceName: string) {
   const documentFactory = () => SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, documentFactory());
 
-  app.useLogger(app.get(Logger));
+  //app.useLogger(app.get(LoggerService));
   app.useGlobalPipes(new ValidationPipe({ transform: true }));
-  await app.listen(process.env.PORT ?? 3000);
+  await app.listen(process.env.PORT ?? port);
 
   if (module.hot) {
     module.hot.accept();
+    // eslint-disable-next-line @typescript-eslint/no-misused-promises
     module.hot.dispose(() => app.close());
   }
 }

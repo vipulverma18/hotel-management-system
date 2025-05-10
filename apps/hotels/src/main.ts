@@ -1,5 +1,4 @@
-import { bootstrap } from '@common/common';
+import { bootstrap } from '@hotels/common';
 import { AppModule } from './app.module';
 
-// eslint-disable-next-line @typescript-eslint/no-unsafe-call
-bootstrap(AppModule, 'hotels');
+bootstrap(AppModule, 'hotels', 3000);

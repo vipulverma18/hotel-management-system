@@ -18,10 +18,10 @@
     "strictBindCallApply": false,
     "noFallthroughCasesInSwitch": false,
     "paths": {
-      "@common/common": [
+      "@hotels/common": [
         "libs/common/src"
       ],
-      "@common/common/*": [
+      "@hotels/common/*": [
         "libs/common/src/*"
       ]
     }
